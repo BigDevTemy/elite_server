@@ -1,7 +1,7 @@
 import users from '../models/users.js'
 import bcrypt from 'bcryptjs'
 const indexpage = ((req,res)=>{
-    res.send('Welcome User');
+    res.send('Welcome User to Heroku Server');
 })
 
 
