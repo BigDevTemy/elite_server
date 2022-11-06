@@ -12,7 +12,7 @@ function generateAccessToken(username) {
 
 const registerUser  = ((req,res)=>{
 
-    const body = req.body;
+    const body = req.body.data;
     
    
    // console.log(req.body);
