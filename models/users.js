@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema({
         type:'String',
         required:[true]
     },
-    paymentstatus:{
+    status:{
         type:'String',
     },
     commitment_fee:{
@@ -41,6 +41,10 @@ const userSchema = mongoose.Schema({
     },
     weight:{
         type:'String',
+    },
+    created_at:{
+        type:Number,
+        default: Date.now
     }
 
 })
