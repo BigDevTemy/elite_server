@@ -1,10 +1,14 @@
 import users from '../models/users.js'
 import plan from '../models/plan.js'
 import bcrypt from 'bcryptjs'
+import jwt from "jsonwebtoken";
 const indexpage = ((req,res)=>{
     res.send('Welcome User to Heroku Server');
 })
 
+function generateAccessToken(username) {
+    return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+  }
 
 const registerUser  = ((req,res)=>{
 
@@ -18,6 +22,8 @@ const registerUser  = ((req,res)=>{
     //     'data':req.body
     // })
     //return false;
+
+
     users.findOne({email:body.email},async (err,docs)=>{
         if(err){
             res.status(400).send(err);
@@ -56,6 +62,7 @@ const registerUser  = ((req,res)=>{
                 weight:body.weight,
                 age:body.age
             })
+            const token = generateAccessToken({ email: body.email });
 
             if(body.plan_status && body.plan_status == "success"){
                 let mydate = new Date();
@@ -74,7 +81,8 @@ const registerUser  = ((req,res)=>{
                 res.send({
                     'message':'User successfully created',
                     'data':userCreated,
-                    'status':true
+                    'status':true,
+                    'token':token
                 })
             }
             else{
