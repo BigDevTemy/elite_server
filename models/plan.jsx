@@ -19,6 +19,9 @@ const userSchema = mongoose.Schema({
         type:'String',
         required:[true]
     },
+    plan_status:{
+        type:'String'
+    },
     expirydate:{
         type:'String',
         required:[true]

@@ -7,15 +7,15 @@ const indexpage = ((req,res)=>{
 
 const registerUser  = ((req,res)=>{
 
-    const body = req.body;
+    const body = req.body.data;
 
-    console.log(req.body.data.email);
-    res.send({
-        'message':'Saved',
-        'status':true,
-        'data':req.body
-    })
-    return false;
+    // console.log(req.body.data.email);
+    // res.send({
+    //     'message':'Saved',
+    //     'status':true,
+    //     'data':req.body
+    // })
+    // return false;
     users.findOne({email:body.email},async (err,docs)=>{
         if(err){
             res.status(400).send(err);
@@ -27,12 +27,42 @@ const registerUser  = ((req,res)=>{
             })
         }
         else{
-              const userCreated = new users(body);
+            //   const userCreated = new users(body);
 
+            
 
               const salt = await bcrypt.genSalt(10);
-              userCreated.password = await bcrypt.hash(userCreated.password, salt);
-              userCreated.save().then((doc) => res.status(201).send(doc));
+                let password = await bcrypt.hash(body.password, salt);
+            //   userCreated.save().then((doc) => res.status(201).send(doc));
+            let commitment_fee_status 
+            if(req.body.data.status == "success"){
+                commitment_fee_status="paid"
+            }else{
+                commitment_fee_status="unpaid"
+            }
+            let gender,weight,age,plan,plan_status,planpaymentamount,plan_reference;
+            const userCreated = await users.create({
+                password:password,
+                reference:body.reference,
+                status:body.status,
+                commitment_fee:commitment_fee_status,
+                email:body.email,
+                email_verified:false,
+                
+            })
+
+            if(userCreated){
+                res.send({
+                    'message':'User successfully created',
+                    'data':userCreated
+                })
+            }
+            else{
+                res.send({
+                    'message':'Something went wrong',
+                    
+                })
+            }
 
 
         }
