@@ -6,10 +6,11 @@ const indexpage = ((req,res)=>{
 
 
 const registerUser  = ((req,res)=>{
+
 const body = req.body;
 
     console.log(req.body);
-    res.status(200).send({
+    res.send({
         'message':'Saved',
         'status':true
     })
