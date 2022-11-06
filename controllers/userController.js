@@ -8,15 +8,16 @@ const indexpage = ((req,res)=>{
 
 const registerUser  = ((req,res)=>{
 
-    const body = req.body.data;
-
-    console.log(req.body.data);
+    const body = req.body;
+    
+   
+   // console.log(req.body);
     // res.send({
     //     'message':'Saved',
     //     'status':true,
     //     'data':req.body
     // })
-    return false;
+    //return false;
     users.findOne({email:body.email},async (err,docs)=>{
         if(err){
             res.status(400).send(err);
@@ -36,7 +37,7 @@ const registerUser  = ((req,res)=>{
                 let password = await bcrypt.hash(body.password, salt);
             //   userCreated.save().then((doc) => res.status(201).send(doc));
             let commitment_fee_status 
-            if(req.body.data.status == "success"){
+            if(body.status == "success"){
                 commitment_fee_status="paid"
             }else{
                 commitment_fee_status="unpaid"
@@ -57,13 +58,14 @@ const registerUser  = ((req,res)=>{
             })
 
             if(body.plan_status && body.plan_status == "success"){
+                let mydate = new Date();
                 const createPlan = await plan.create({
                     userid:userCreated._id,
                     amount:body.planpaymentamount,
                     plan_type:body.plan,
                     payment_reference:body.plan_reference,
                     plan_status:body.plan_status,
-                    dateofpayment:Date.now,
+                    dateofpayment:mydate.getDate() + '-' + mydate.getMonth() +'-'+ mydate.getFullYear(),
 
                 })
             }
