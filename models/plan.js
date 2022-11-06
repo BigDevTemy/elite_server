@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const userSchema = mongoose.Schema({
+const planSchema = mongoose.Schema({
     userid:{
         type:'String',
         required:[true]
@@ -38,4 +38,4 @@ const userSchema = mongoose.Schema({
 })
 
 
-export default mongoose.model('user',userSchema)
+export default mongoose.model('plan',planSchema)
