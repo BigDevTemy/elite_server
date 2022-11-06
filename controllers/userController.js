@@ -10,13 +10,13 @@ const registerUser  = ((req,res)=>{
 
     const body = req.body.data;
 
-    // console.log(req.body.data.email);
+    console.log(req.body.data);
     // res.send({
     //     'message':'Saved',
     //     'status':true,
     //     'data':req.body
     // })
-    // return false;
+    return false;
     users.findOne({email:body.email},async (err,docs)=>{
         if(err){
             res.status(400).send(err);
