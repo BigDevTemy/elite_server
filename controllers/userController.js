@@ -6,9 +6,65 @@ const indexpage = ((req,res)=>{
     res.send('Welcome User to Heroku Server');
 })
 
+
+
 function generateAccessToken(username) {
     return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
   }
+
+
+  const comparePassword = async (password, hash) => {
+    try {
+      // Compare password
+      console.log(password);
+      console.log(hash)
+      return await bcrypt.compare(password, hash)
+    } catch (error) {
+      console.log(error)
+    }
+  
+    // Return false if error
+    return false
+  }
+
+const loginUser = ((req,res)=>{
+    let body = req.body.data
+    console.log(body)
+    users.findOne({email:body.email},(err,docs)=>{
+        if(err){
+            res.status(400).send({
+                'message':err
+            })
+        }
+        else if(docs){
+            let checkpassword = comparePassword(body.password,docs.password);
+            
+            const token = generateAccessToken({ email: body.email });
+            if(checkpassword){
+                res.send({
+                    'message':docs,
+                    'status':true,
+                    'token':token
+
+                })
+            }
+            else{
+                res.status(400).send({
+                    'message':'Invalid login credentials',
+                    'status':false
+    
+                })
+            }
+        }
+        else if(!docs){
+            res.status(400).send({
+                'message':'Invalid login credentials',
+                'status':false
+
+            })
+        }
+    })
+})
 
 const registerUser  = ((req,res)=>{
 
@@ -104,4 +160,4 @@ const registerUser  = ((req,res)=>{
         }
     })
 })
-export {indexpage,registerUser}
+export {indexpage,registerUser,loginUser}
