@@ -12,7 +12,8 @@ const registerUser  = ((req,res)=>{
     console.log(req.body);
     res.send({
         'message':'Saved',
-        'status':true
+        'status':true,
+        'data':req.body
     })
     return false;
     users.findOne({email:body.email},async (err,docs)=>{
