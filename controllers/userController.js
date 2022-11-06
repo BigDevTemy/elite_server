@@ -1,4 +1,5 @@
 import users from '../models/users.js'
+import plan from '../models/plan.js'
 import bcrypt from 'bcryptjs'
 const indexpage = ((req,res)=>{
     res.send('Welcome User to Heroku Server');
@@ -40,7 +41,8 @@ const registerUser  = ((req,res)=>{
             }else{
                 commitment_fee_status="unpaid"
             }
-            let gender,weight,age,plan,plan_status,planpaymentamount,plan_reference;
+            // let gender,weight,age,plan,plan_status,planpaymentamount,plan_reference;
+            
             const userCreated = await users.create({
                 password:password,
                 reference:body.reference,
@@ -48,8 +50,22 @@ const registerUser  = ((req,res)=>{
                 commitment_fee:commitment_fee_status,
                 email:body.email,
                 email_verified:false,
-                
+                gender:body.gender,
+                weight:body.weight,
+                age:body.age
             })
+
+            if(body.plan.status && body.plan_status == "success"){
+                const createPlan = await plan.create({
+                    userid:userCreated._id,
+                    amount:body.planpaymentamount,
+                    plan_type:body.plan,
+                    payment_reference:body.plan_reference,
+                    plan_status:body.plan_status,
+                    dateofpayment:Date.now,
+
+                })
+            }
 
             if(userCreated){
                 res.send({

@@ -24,7 +24,11 @@ const userSchema = mongoose.Schema({
     },
     expirydate:{
         type:'String',
-        required:[true]
+        
+    },
+    amount:{
+        type:'String',
+        
     },
     created_at:{
         type:Number,
