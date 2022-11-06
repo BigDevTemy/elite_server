@@ -55,7 +55,7 @@ const registerUser  = ((req,res)=>{
                 age:body.age
             })
 
-            if(body.plan.status && body.plan_status == "success"){
+            if(body.plan_status && body.plan_status == "success"){
                 const createPlan = await plan.create({
                     userid:userCreated._id,
                     amount:body.planpaymentamount,
