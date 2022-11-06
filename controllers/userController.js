@@ -7,7 +7,7 @@ const indexpage = ((req,res)=>{
 
 const registerUser  = ((req,res)=>{
 
-const body = req.body;
+    const body = req.body;
 
     console.log(req.body);
     res.send({
