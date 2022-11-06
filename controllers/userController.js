@@ -26,7 +26,10 @@ const registerUser  = ((req,res)=>{
 
     users.findOne({email:body.email},async (err,docs)=>{
         if(err){
-            res.status(400).send(err);
+            res.status(400).send({
+                'message':err,
+                'status':false
+            });
         }
         else if(docs){
             res.status(400).send({
