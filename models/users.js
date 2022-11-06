@@ -39,6 +39,9 @@ const userSchema = mongoose.Schema({
         type:'String',
         
     },
+    age:{
+        type:'String'
+    },
     weight:{
         type:'String',
     },
