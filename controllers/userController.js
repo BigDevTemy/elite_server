@@ -41,8 +41,9 @@ const registerUser  = ((req,res)=>{
             }else{
                 commitment_fee_status="unpaid"
             }
-            // let gender,weight,age,plan,plan_status,planpaymentamount,plan_reference;
-            
+           
+           try{
+                 
             const userCreated = await users.create({
                 password:password,
                 reference:body.reference,
@@ -79,6 +80,10 @@ const registerUser  = ((req,res)=>{
                     
                 })
             }
+           }
+           catch(err){
+                console.log(err);
+           }
 
 
         }
