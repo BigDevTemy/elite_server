@@ -9,7 +9,7 @@ const registerUser  = ((req,res)=>{
 
     const body = req.body;
 
-    console.log(req.body.email);
+    console.log(req.body.data.email);
     res.send({
         'message':'Saved',
         'status':true,
