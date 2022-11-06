@@ -73,12 +73,14 @@ const registerUser  = ((req,res)=>{
             if(userCreated){
                 res.send({
                     'message':'User successfully created',
-                    'data':userCreated
+                    'data':userCreated,
+                    'status':true
                 })
             }
             else{
-                res.send({
+                res.status(400).send({
                     'message':'Something went wrong',
+                    'status':false
                     
                 })
             }
