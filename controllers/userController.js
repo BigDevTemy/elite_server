@@ -13,6 +13,7 @@ const body = req.body;
         'message':'Saved',
         'status':true
     })
+    return false;
     users.findOne({email:body.email},async (err,docs)=>{
         if(err){
             res.status(400).send(err);
