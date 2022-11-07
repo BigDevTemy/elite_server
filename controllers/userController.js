@@ -1,5 +1,6 @@
 import users from '../models/users.js'
-import plan from '../models/plan.js'
+import planpackage from '../models/plan.js'
+import dailytask from '../models/dailytask.js'
 import bcrypt from 'bcryptjs'
 import jwt from "jsonwebtoken";
 const indexpage = ((req,res)=>{
@@ -28,9 +29,11 @@ function generateAccessToken(username) {
   }
 
 const loginUser = ((req,res)=>{
-    let body = req.body.data
+    let body = req.body
     console.log(body)
-    users.findOne({email:body.email},(err,docs)=>{
+    let mydate = new Date();
+    let today = mydate.getDate() + '-' + mydate.getMonth() +'-'+ mydate.getFullYear();
+    users.findOne({email:body.email},async (err,docs)=>{
         if(err){
             res.status(400).send({
                 'message':err
@@ -38,15 +41,31 @@ const loginUser = ((req,res)=>{
         }
         else if(docs){
             let checkpassword = comparePassword(body.password,docs.password);
-            
             const token = generateAccessToken({ email: body.email });
+            
             if(checkpassword){
-                res.send({
-                    'message':docs,
-                    'status':true,
-                    'token':token
-
+                
+                dailytask.findOne({userid:docs._id,date:today},(err,docs_task)=>{
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        planpackage.findOne({userid:docs._id},(err,docs_plan)=>{
+                            res.send({
+                                'message':docs,
+                                'plan':docs_plan,
+                                'task':docs_task,
+                                'status':true,
+                                'token':token
+                            })
+                        })
+                    }
+                    
                 })
+               
+                
+               
+                
             }
             else{
                 res.status(400).send({
@@ -65,6 +84,22 @@ const loginUser = ((req,res)=>{
         }
     })
 })
+
+// async function planFetch(){
+//   let result =  await plan.findOne({userid:'990890809'},(err,docs)=>
+//     {
+//         if(err){
+//             return [false,err];
+//         }
+//         else{
+//              return [true,docs];
+//         }
+//     })
+
+//     return result;
+
+    
+// }
 
 const registerUser  = ((req,res)=>{
 
