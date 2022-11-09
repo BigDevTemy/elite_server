@@ -41,7 +41,7 @@ const loginUser = ((req,res)=>{
         }
         else if(docs){
             let checkpassword = await comparePassword(body.password,docs.password);
-            const token = generateAccessToken({ email: body.email });
+            const token = generateAccessToken({ email:body.email });
             console.log('check',docs.password);
             if(checkpassword){
                 
