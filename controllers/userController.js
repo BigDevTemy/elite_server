@@ -77,7 +77,7 @@ const loginUser = ((req,res)=>{
         }
         else if(!docs){
             res.status(400).send({
-                'message':'Invalid login credentials 2',
+                'message':'Invalid Email Address',
                 'status':false
 
             })
