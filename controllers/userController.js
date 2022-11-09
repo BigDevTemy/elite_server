@@ -17,11 +17,11 @@ function generateAccessToken(username) {
   const comparePassword = async (password, hash) => {
     try {
       // Compare password
-      console.log(password);
-      console.log(hash)
+      console.log('password',password);
+      console.log('hash',hash)
       return await bcrypt.compare(password, hash)
     } catch (error) {
-      console.log(error)
+      console.log('error',error)
     }
   
     // Return false if error
