@@ -42,7 +42,7 @@ const loginUser = ((req,res)=>{
         else if(docs){
             let checkpassword = await comparePassword(body.password,docs.password);
             const token = generateAccessToken({ email: body.email });
-            console.log(checkpassword);
+            console.log('check',docs.password);
             if(checkpassword){
                 
                 dailytask.findOne({userid:docs._id,date:today},(err,docs_task)=>{
