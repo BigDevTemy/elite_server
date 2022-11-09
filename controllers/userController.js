@@ -29,7 +29,7 @@ function generateAccessToken(username) {
   }
 
 const loginUser = ((req,res)=>{
-    let body = req.body
+    let body = req.body.items
     console.log(body)
     let mydate = new Date();
     let today = mydate.getDate() + '-' + mydate.getMonth() +'-'+ mydate.getFullYear();
