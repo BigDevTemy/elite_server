@@ -69,7 +69,7 @@ const loginUser = ((req,res)=>{
             }
             else{
                 res.status(400).send({
-                    'message':'Invalid login credentials',
+                    'message':'Invalid login credentials 1',
                     'status':false
     
                 })
@@ -77,7 +77,7 @@ const loginUser = ((req,res)=>{
         }
         else if(!docs){
             res.status(400).send({
-                'message':'Invalid login credentials',
+                'message':'Invalid login credentials 2',
                 'status':false
 
             })
