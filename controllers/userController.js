@@ -31,7 +31,7 @@ function generateAccessToken(username) {
 const loginUser = ((req,res)=>{
     let body = req.body.items
     
-    console.log('pwaord',body.password)
+    console.log('pwaord',body)
     let mydate = new Date();
     let today = mydate.getDate() + '-' + mydate.getMonth() +'-'+ mydate.getFullYear();
     users.findOne({email:body.email},async (err,docs)=>{
