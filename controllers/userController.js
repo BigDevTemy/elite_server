@@ -40,9 +40,9 @@ const loginUser = ((req,res)=>{
             })
         }
         else if(docs){
-            let checkpassword = comparePassword(body.password,docs.password);
+            let checkpassword = await comparePassword(body.password,docs.password);
             const token = generateAccessToken({ email: body.email });
-            
+            console.log(checkpassword);
             if(checkpassword){
                 
                 dailytask.findOne({userid:docs._id,date:today},(err,docs_task)=>{
