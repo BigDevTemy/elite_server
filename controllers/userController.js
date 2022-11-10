@@ -162,7 +162,7 @@ const registerUser  = ((req,res)=>{
 
             if(body.plan_status && body.plan_status == "success"){
                 let mydate = new Date();
-                const createPlan = await plan.create({
+                const createPlan = await planpackage.create({
                     userid:userCreated._id,
                     amount:body.planpaymentamount,
                     plan_type:body.plan,
