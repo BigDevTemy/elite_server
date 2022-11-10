@@ -154,7 +154,9 @@ const registerUser  = ((req,res)=>{
                 email_verified:false,
                 gender:body.gender,
                 weight:body.weight,
-                age:body.age
+                age:body.age,
+                firstname:firstname,
+                lastname:lastname
             })
             const token = generateAccessToken({ email: body.email });
 
