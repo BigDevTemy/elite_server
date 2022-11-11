@@ -206,7 +206,7 @@ const createTask = (async (req,res)=>{
         userid:body.userid,
         task_title:body.task_title,
         allotted_time:body.allotted_time,
-        status:body.status
+        status:false
     });
     if(taskCreated){
         res.send({
