@@ -31,7 +31,7 @@ function generateAccessToken(username) {
 
 const loginUser = ((req,res)=>{
     let body = req.body.items
-    console.log('body',req.body)
+    
     const today = moment().startOf('day')
     // let mydate = new Date();
     //let today = mydate.getDate() + '-' + mydate.getMonth() +'-'+ mydate.getFullYear();
@@ -238,6 +238,35 @@ const createTask = (async (req,res)=>{
     }
 })
 
+const deleteTask = (async(req,res)=>{
+
+      // let body = req.body.items
+    let body = req.body.items
+    const today = moment().startOf('day')
+    dailytask.deleteOne({_id:body.id},async(err,docs)=>{
+        if(err){
+            res.status(400).send({
+                'message':err,
+                'status':false
+            })
+        }
+        else if(docs){
+            let todayTasks = await dailytask.find({$and:[{userid:body.userid},{createdAt: {
+                $gte: today.toDate(),
+                $lte: moment(today).endOf('day').toDate()
+              }}]}).sort({'created_at':-1})
+            
+              res.send({
+                'message':'Deletion was Successful',
+                'todayTask':todayTasks
+
+              })
+            
+        }
+    })
+
+    
+})
 
 
-export {indexpage,registerUser,loginUser,createTask}
+export {indexpage,registerUser,loginUser,createTask,deleteTask}
