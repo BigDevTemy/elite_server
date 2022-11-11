@@ -69,7 +69,7 @@ const loginUser = ((req,res)=>{
                         })
                     }
                     
-                })
+                }).sort({'created_at':-1})
                
                 
                
