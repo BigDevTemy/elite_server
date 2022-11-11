@@ -200,7 +200,7 @@ const registerUser  = ((req,res)=>{
 })
 
 const createTask = (async (req,res)=>{
-    let body = req.body
+    let body = req.body.items
 
     const taskCreated = await dailytask.create({
         userid:body.userid,
