@@ -267,4 +267,36 @@ const deleteTask = (async(req,res)=>{
 })
 
 
-export {indexpage,registerUser,loginUser,createTask,deleteTask}
+const updateTask = (async(req,res)=>{
+
+    // let body = req.body.items
+  let body = req.body.items
+  const today = moment().startOf('day');
+
+  dailytask.findOneAndUpdate({_id:body._id},{status:body.updatedstatus},async(err,docs)=>{
+      if(err){
+          res.status(400).send({
+              'message':err,
+              'status':false
+          })
+      }
+      else if(docs){
+          let todayTasks = await dailytask.find({$and:[{userid:body.userid},{createdAt: {
+              $gte: today.toDate(),
+              $lte: moment(today).endOf('day').toDate()
+            }}]}).sort({'created_at':-1})
+          
+            res.send({
+              'message':'Update was Successful',
+              'todayTask':todayTasks
+
+            })
+          
+      }
+  })
+
+  
+})
+
+
+export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask}
