@@ -111,5 +111,26 @@ const createDiscovery = (async (req,res)=>{
    
 })
 
+const allDiscovery = async (req,res)=>{
+    let alldata = await discover.find({}).sort({'created_at':-1});
 
-export {indexpage,createCategory,createLevel,createDiscovery}
+    if(alldata){
+        res.send({
+            "message":"Data Successfully Fetched",
+            "data":alldata,
+            "status":true
+        })
+    }
+    else{
+        res.send({
+            "message":"Fetch Failed",
+            "data":null,
+            "status":false
+
+        })
+    }
+    
+}
+
+
+export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery}
