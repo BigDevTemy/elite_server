@@ -32,9 +32,9 @@ function generateAccessToken(username) {
 const loginUser = ((req,res)=>{
     let body = req.body.items
     console.log('body',req.body)
-    
-    let mydate = new Date();
-    let today = mydate.getDate() + '-' + mydate.getMonth() +'-'+ mydate.getFullYear();
+    const today = moment().startOf('day')
+    // let mydate = new Date();
+    //let today = mydate.getDate() + '-' + mydate.getMonth() +'-'+ mydate.getFullYear();
     users.findOne({email:body.email},async (err,docs)=>{
         if(err){
             res.status(400).send({
@@ -46,8 +46,14 @@ const loginUser = ((req,res)=>{
             const token = generateAccessToken({ email:body.email });
             
             if(checkpassword){
-                
-                dailytask.findOne({userid:docs._id,date:today},(err,docs_task)=>{
+               
+                dailytask.find({$and:[{userid:docs._id},
+                    {
+                        createdAt: {
+                            $gte: today.toDate(),
+                            $lte: moment(today).endOf('day').toDate()
+                        }
+                }]},(err,docs_task)=>{
                     if(err){
                         console.log(err);
                     }
