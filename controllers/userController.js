@@ -8,8 +8,6 @@ const indexpage = ((req,res)=>{
     res.send('Welcome User to Heroku Server');
 })
 
-
-
 function generateAccessToken(username) {
     return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '216000s' });
   }
@@ -243,7 +241,7 @@ const deleteTask = (async(req,res)=>{
       // let body = req.body.items
     let body = req.body.items
     const today = moment().startOf('day')
-    dailytask.deleteOne({_id:body.id},async(err,docs)=>{
+    dailytask.deleteOne({_id:body._id},async(err,docs)=>{
         if(err){
             res.status(400).send({
                 'message':err,
