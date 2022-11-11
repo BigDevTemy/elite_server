@@ -6,6 +6,8 @@ import jwt from "jsonwebtoken";
 import moment from 'moment';
 import Cloudinary from 'cloudinary'
 import discover from '../models/discover.js';
+import category from '../models/category.js';
+import level from '../models/level.js';
 
 Cloudinary.config({
     cloud_name:'dgabmeacq',
@@ -35,11 +37,51 @@ const indexpage = (req,res)=>{
 }
 
 const createCategory = (async (res,req)=>{
-    let createDiscover = await discover.create({
-        
+    let body = req.body
+    let createcategory = await category.create({
+        name:body.name,
+        status:body.status
+
     })
+
+    if(createcategory){
+        res.send({
+            'message':'Category Created',
+            'data':createCategory,
+            'status':true
+        })
+    }
+    else{
+        res.send({
+            'message':'Category Error',
+            'status':false
+        })
+    }
+})
+
+const createLevel = (async (res,req)=>{
+    let body = req.body
+    let createlevel = await level.create({
+        name:body.name,
+        status:body.status
+
+    })
+
+    if(createlevel){
+        res.send({
+            'message':'Level Created',
+            'data':createlevel,
+            'status':true
+        })
+    }
+    else{
+        res.send({
+            'message':'Level Created Error',
+            'status':false
+        })
+    }
 })
 
 
 
-export {indexpage}
+export {indexpage,createCategory,createLevel}
