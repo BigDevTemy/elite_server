@@ -30,7 +30,7 @@ function generateAccessToken(username) {
   }
 
 const loginUser = ((req,res)=>{
-    let body = req.body
+    let body = req.body.items
     console.log('body',req.body)
     
     let mydate = new Date();
@@ -202,7 +202,7 @@ const registerUser  = ((req,res)=>{
 
 const createTask = (async (req,res)=>{
     // let body = req.body.items
-    let body = req.body
+    let body = req.body.items
     const today = moment().startOf('day')
 
     const taskCreated = await dailytask.create({
