@@ -3,6 +3,7 @@ import planpackage from '../models/plan.js'
 import dailytask from '../models/dailytask.js'
 import bcrypt from 'bcryptjs'
 import jwt from "jsonwebtoken";
+import moment from 'moment';
 const indexpage = ((req,res)=>{
     res.send('Welcome User to Heroku Server');
 })
@@ -29,7 +30,7 @@ function generateAccessToken(username) {
   }
 
 const loginUser = ((req,res)=>{
-    let body = req.body.items
+    let body = req.body
     console.log('body',req.body)
     
     let mydate = new Date();
@@ -200,7 +201,9 @@ const registerUser  = ((req,res)=>{
 })
 
 const createTask = (async (req,res)=>{
-    let body = req.body.items
+    // let body = req.body.items
+    let body = req.body
+    const today = moment().startOf('day')
 
     const taskCreated = await dailytask.create({
         userid:body.userid,
@@ -209,8 +212,15 @@ const createTask = (async (req,res)=>{
         status:false
     });
     if(taskCreated){
+        let todayTasks = await dailytask.find({
+            createdAt: {
+              $gte: today.toDate(),
+              $lte: moment(today).endOf('day').toDate()
+            }
+          })
         res.send({
             'message':'Task Created Successfully',
+            'todayTasks':todayTasks,
             'status':true
         })
     }
