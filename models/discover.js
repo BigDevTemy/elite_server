@@ -3,17 +3,22 @@ import mongoose from 'mongoose'
 const discoverSchema = mongoose.Schema({
     title:{
         type:'String',
-        required:[true]
+       
         
     },
     allotted_time:{
         type:'String',
-        required:[true]
-        
+      
+    },
+    asset_url:{
+        type:'String',
+    },
+    type:{
+        type:'String'
     },
     level:{
         type:'String',
-        required:[true]
+        
     },
     category:{
         type:'String'

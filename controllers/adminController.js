@@ -36,12 +36,13 @@ const indexpage = (req,res)=>{
     })
 }
 
-const createCategory = (async (res,req)=>{
+const createCategory = (async (req,res)=>{
     let body = req.body
+
+    console.log(body)
     let createcategory = await category.create({
         name:body.name,
         status:body.status
-
     })
 
     if(createcategory){
@@ -59,7 +60,7 @@ const createCategory = (async (res,req)=>{
     }
 })
 
-const createLevel = (async (res,req)=>{
+const createLevel = (async (req,res)=>{
     let body = req.body
     let createlevel = await level.create({
         name:body.name,
@@ -83,5 +84,32 @@ const createLevel = (async (res,req)=>{
 })
 
 
+const createDiscovery = (async (req,res)=>{
+    let creatediscovery = await discover.create({
+        "asset_url":req.body.asset_url,
+        "title":req.body.title,
+        "allotted_time":req.body.allotted_time,
+        "type":req.body.type,
+        "level":req.body.level,
+        "category":req.body.category,
+        "status":req.body.status
 
-export {indexpage,createCategory,createLevel}
+    })
+
+    if(creatediscovery){
+        res.send({
+            "message":"Discovery Successfully Created",
+            "status":true
+        })
+    }
+    else{
+        res.status(400).send({
+            "message":"Discovery Creation Failed",
+            "status":false
+        })
+    }
+   
+})
+
+
+export {indexpage,createCategory,createLevel,createDiscovery}
