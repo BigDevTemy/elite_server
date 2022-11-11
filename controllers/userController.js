@@ -197,4 +197,30 @@ const registerUser  = ((req,res)=>{
         }
     })
 })
-export {indexpage,registerUser,loginUser}
+
+const createTask = (async (req,res)=>{
+    let body = req.body
+
+    const taskCreated = await dailytask.create({
+        userid:body.userid,
+        task_title:body.task_title,
+        allotted_time:body.allotted_time,
+        status:body.status
+    });
+    if(taskCreated){
+        res.send({
+            'message':'Task Created Successfully',
+            'status':true
+        })
+    }
+    else{
+        res.status(400).send({
+            'message':'Task creation was unsuccessfu;',
+            'status':false
+        })
+    }
+})
+
+
+
+export {indexpage,registerUser,loginUser,createTask}
