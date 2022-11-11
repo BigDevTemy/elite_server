@@ -217,7 +217,7 @@ const createTask = (async (req,res)=>{
               $gte: today.toDate(),
               $lte: moment(today).endOf('day').toDate()
             }
-          })
+          }).sort({'created_at':-1})
         res.send({
             'message':'Task Created Successfully',
             'todayTasks':todayTasks,
