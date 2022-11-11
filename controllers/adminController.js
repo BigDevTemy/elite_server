@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 import jwt from "jsonwebtoken";
 import moment from 'moment';
 import Cloudinary from 'cloudinary'
+import discover from '../models/discover.js';
 
 Cloudinary.config({
     cloud_name:'dgabmeacq',
@@ -32,5 +33,13 @@ const indexpage = (req,res)=>{
         "status":true
     })
 }
+
+const createCategory = (async (res,req)=>{
+    let createDiscover = await discover.create({
+        
+    })
+})
+
+
 
 export {indexpage}
