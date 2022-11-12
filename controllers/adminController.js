@@ -112,12 +112,18 @@ const createDiscovery = (async (req,res)=>{
 })
 
 const allDiscovery = async (req,res)=>{
-    let alldata = await discover.find({}).sort({'created_at':-1});
+    let alldata_beginner = await discover.find({level:'Beginner'}).sort({'created_at':-1}).limit(3);
+    let alldata_intermidiate = await discover.find({level:'Intermidiate'}).sort({'created_at':-1}).limit(3);
+    let alldata_Pro = await discover.find({level:'Pro'}).sort({'created_at':-1}).limit(3);
 
-    if(alldata){
+    if(alldata_beginner){
         res.send({
             "message":"Data Successfully Fetched",
-            "data":alldata,
+            "data":{
+                'beginners':alldata_beginner,
+                'intermidiate':alldata_intermidiate,
+                'pro':alldata_Pro
+            },
             "status":true
         })
     }
