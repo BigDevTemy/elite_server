@@ -304,7 +304,7 @@ const updateTask = (async(req,res)=>{
 
 const refreshUserData = ((req,res)=>{
 
-    let body  = req.body
+    let body  = req.body.items
     const today = moment().startOf('day')
     console.log(today.toDate())
     console.log(moment(today).endOf('day').toDate())
