@@ -4,6 +4,7 @@ import dailytask from '../models/dailytask.js'
 import bcrypt from 'bcryptjs'
 import jwt from "jsonwebtoken";
 import moment from 'moment';
+import discover from '../models/discover.js';
 
 
 
@@ -353,5 +354,54 @@ const refreshUserData = ((req,res)=>{
 
 })
 
+const aggregateData = (async (req,res)=>{
+    let Balance = await discover.aggregate([
+        {$match:{category:'Balance'}},
+        {
+            $group:{
+               _id:{title:'$title',status:'$status',allotted_time:'$allotted_time',type:'$type',level:'$level'},
+               
+            }
+        }
+    ])
+    let Aerobic = await discover.aggregate([
+        {$match:{category:'Aerobic'}},
+        {
+            $group:{
+               _id:{title:'$title',status:'$status',allotted_time:'$allotted_time',type:'$type',level:'$level'},
+               
+            }
+        }
+    ])
+    let Flexibility = await discover.aggregate([
+        {$match:{category:'Flexibility'}},
+        {
+            $group:{
+               _id:{title:'$title',status:'$status',allotted_time:'$allotted_time',type:'$type',level:'$level'},
+               
+            }
+        }
+    ])
+    let Stretching = await discover.aggregate([
+        {$match:{category:'Stretching'}},
+        {
+            $group:{
+               _id:{title:'$title',status:'$status',allotted_time:'$allotted_time',type:'$type',level:'$level'},
+               
+            }
+        }
+    ])
 
-export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData}
+    res.send({
+        "Balance":Balance,
+        "Aerobic":Aerobic,
+        "Flexibility":Flexibility,
+        "Stretching":Stretching,
+        'status':true
+    })
+
+   
+})
+
+
+export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData}
