@@ -46,7 +46,7 @@ const userSchema = mongoose.Schema({
         type:'String',
     },
     created_at:{
-        type:Number,
+        type:Date,
         default: new Date()
     }
 

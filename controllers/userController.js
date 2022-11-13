@@ -302,4 +302,50 @@ const updateTask = (async(req,res)=>{
 })
 
 
-export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask}
+const refreshUserData = ((req,res)=>{
+
+    let body  = req.body
+    const today = moment().startOf('day')
+    console.log(today.toDate())
+    console.log(moment(today).endOf('day').toDate())
+    users.findOne({_id:body._id},(err,docs)=>{
+        if(err){
+            res.status(400).send({
+                "message":err,
+                "status":false
+            })
+        }
+        else if(docs){
+            dailytask.find({$and:[{userid:docs._id},
+                {
+                    
+                    created_at: {
+                        $gte: today.toDate(),
+                        $lte: moment(today).endOf('day').toDate()
+                    }
+            }]},(err,docs_task)=>{
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    planpackage.findOne({userid:docs._id},(err,docs_plan)=>{
+                        res.send({
+                            'message':docs,
+                            'plan':docs_plan,
+                            'task':docs_task,
+                            'status':true,
+                            'token':body.token
+                        })
+                    })
+                }
+                
+            }).sort({'created_at':-1})
+        }
+    })
+
+
+
+})
+
+
+export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData}

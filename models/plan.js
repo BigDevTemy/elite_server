@@ -32,7 +32,7 @@ const planSchema = mongoose.Schema({
     },
    
     created_at:{
-        type:Number,
+        type:Date,
         default: new Date()
     }
 
