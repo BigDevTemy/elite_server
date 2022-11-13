@@ -50,7 +50,7 @@ const loginUser = ((req,res)=>{
                
                 dailytask.find({$and:[{userid:docs._id},
                     {
-                        createdAt: {
+                        created_at: {
                             $gte: today.toDate(),
                             $lte: moment(today).endOf('day').toDate()
                         }
@@ -340,6 +340,12 @@ const refreshUserData = ((req,res)=>{
                 }
                 
             }).sort({'created_at':-1})
+        }
+        else{
+            res.status(400).send({
+                "message":'User doesnt Exit',
+                "status":false
+            })
         }
     })
 
