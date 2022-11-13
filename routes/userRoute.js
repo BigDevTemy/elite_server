@@ -9,5 +9,5 @@ route.post('/loginuser',loginUser);
 route.post('/createTask',auth,createTask);
 route.post('/deleteTask',auth,deleteTask);
 route.post('/updateTask',auth,updateTask);
-route.post('/refreshdata',refreshUserData);
+route.post('/refreshdata',auth,refreshUserData);
 export default route;
