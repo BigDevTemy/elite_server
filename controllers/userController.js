@@ -221,7 +221,7 @@ const createTask = (async (req,res)=>{
     });
     if(taskCreated){
         let todayTasks = await dailytask.find({
-            createdAt: {
+            created_at: {
               $gte: today.toDate(),
               $lte: moment(today).endOf('day').toDate()
             }
