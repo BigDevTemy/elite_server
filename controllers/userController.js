@@ -253,7 +253,7 @@ const deleteTask = (async(req,res)=>{
             })
         }
         else if(docs){
-            let todayTasks = await dailytask.find({$and:[{userid:body.userid},{createdAt: {
+            let todayTasks = await dailytask.find({$and:[{userid:body.userid},{created_at: {
                 $gte: today.toDate(),
                 $lte: moment(today).endOf('day').toDate()
               }}]}).sort({'created_at':-1})
@@ -285,7 +285,7 @@ const updateTask = (async(req,res)=>{
           })
       }
       else if(docs){
-          let todayTasks = await dailytask.find({$and:[{userid:body.userid},{createdAt: {
+          let todayTasks = await dailytask.find({$and:[{userid:body.userid},{created_at: {
               $gte: today.toDate(),
               $lte: moment(today).endOf('day').toDate()
             }}]}).sort({'created_at':-1})
