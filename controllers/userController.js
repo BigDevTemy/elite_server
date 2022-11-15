@@ -404,7 +404,7 @@ const aggregateData = (async (req,res)=>{
 })
 
 const insightData = ((req,res)=>{
-    let body = req.body
+    let body = req.body.items
    let x =  moment(body.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
   
     let fetchData = dailytask.find({
