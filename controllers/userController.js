@@ -359,7 +359,7 @@ const aggregateData = (async (req,res)=>{
         {$match:{category:'Balance'}},
         {
             $group:{
-               _id:{title:'$title',status:'$status',allotted_time:'$allotted_time',type:'$type',level:'$level'},
+               _id:{id:'$_id',title:'$title',status:'$status',allotted_time:'$allotted_time',type:'$type',level:'$level'},
                
             }
         }
@@ -368,7 +368,7 @@ const aggregateData = (async (req,res)=>{
         {$match:{category:'Aerobic'}},
         {
             $group:{
-               _id:{title:'$title',status:'$status',allotted_time:'$allotted_time',type:'$type',level:'$level'},
+               _id:{id:'$_id',title:'$title',status:'$status',allotted_time:'$allotted_time',type:'$type',level:'$level'},
                
             }
         }
@@ -377,7 +377,7 @@ const aggregateData = (async (req,res)=>{
         {$match:{category:'Flexibility'}},
         {
             $group:{
-               _id:{title:'$title',status:'$status',allotted_time:'$allotted_time',type:'$type',level:'$level'},
+               _id:{id:'$_id',title:'$title',status:'$status',allotted_time:'$allotted_time',type:'$type',level:'$level'},
                
             }
         }
@@ -386,7 +386,7 @@ const aggregateData = (async (req,res)=>{
         {$match:{category:'Stretching'}},
         {
             $group:{
-               _id:{title:'$title',status:'$status',allotted_time:'$allotted_time',type:'$type',level:'$level'},
+               _id:{id:'$_id',title:'$title',status:'$status',allotted_time:'$allotted_time',type:'$type',level:'$level'},
                
             }
         }
