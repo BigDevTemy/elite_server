@@ -1,5 +1,5 @@
 import express from 'express';
-import {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData} from '../controllers/userController.js'
+import {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData,insightData} from '../controllers/userController.js'
 import {auth} from '../middleware/authMiddleware.js'
 const route = express.Router();
 
@@ -11,4 +11,6 @@ route.post('/deleteTask',auth,deleteTask);
 route.post('/updateTask',auth,updateTask);
 route.post('/refreshdata',auth,refreshUserData);
 route.get('/aggregate',aggregateData);
+route.post('/insight',insightData);
+
 export default route;

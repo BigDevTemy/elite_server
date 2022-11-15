@@ -403,5 +403,32 @@ const aggregateData = (async (req,res)=>{
    
 })
 
+const insightData = ((req,res)=>{
+    let body = req.body
+   let x =  moment(body.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+  
+    let fetchData = dailytask.find({
+        created_at: {
+            $gte: moment(body.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
+            $lte: moment(body.date).endOf('day').toDate()
+            
+          }
+    
+    },(err,docs)=>{
+        if(err){
+            res.status(400).send({
+                "message":err,
+                "status":false
+            })
+        }
+        else{
+            res.send({
+                "message":docs,
+                "status":true
+            })
+        }
+    })
+})
 
-export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData}
+
+export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData,insightData}
