@@ -385,10 +385,10 @@ const refreshUserData = ((req,res)=>{
             }).sort({'created_at':-1})
         }
         else{
-            res.status(400).send({
-                "message":'User doesnt Exit',
-                "status":false
-            })
+            // res.status(400).send({
+            //     "message":'User doesnt Exit',
+            //     "status":false
+            // })
         }
     })
 
