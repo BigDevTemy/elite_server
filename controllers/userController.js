@@ -13,7 +13,7 @@ const indexpage = ((req,res)=>{
 })
 
 const checkEmail = ((req,res)=>{
-    let body = req.body.items
+    let body = req.body
 
     users.findOne({email:body.email},(err,docs)=>{
         if(err){
@@ -456,4 +456,4 @@ const insightData = ((req,res)=>{
 })
 
 
-export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData,insightData}
+export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData,insightData,checkEmail}
