@@ -12,6 +12,31 @@ const indexpage = ((req,res)=>{
     res.send('Welcome User to Heroku Server');
 })
 
+const checkEmail = ((req,res)=>{
+    let body = req.body.items
+
+    users.findOne({email:body.email},(err,docs)=>{
+        if(err){
+            res.status(400).send({
+                "message":err,
+                "status":false
+            })
+        }
+        else if(docs){
+            res.status(400).send({
+                "message":"Email already exist",
+                "status":false
+            })
+        }
+        else if(!docs){
+            res.send({
+                "message":"Email is available",
+                "status":true
+            })
+        }
+    })
+})
+
 function generateAccessToken(username) {
     return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '216000s' });
   }
