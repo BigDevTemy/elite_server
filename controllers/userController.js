@@ -140,16 +140,9 @@ const loginUser = ((req,res)=>{
 const registerUser  = ((req,res)=>{
 
     const body = req.body.items;
-    
+    const today = moment().startOf('day')
    console.log(req.body)
-   // console.log(req.body);
-    // res.send({
-    //     'message':'Saved',
-    //     'status':true,
-    //     'data':req.body
-    // })
-    //return false;
-
+   
 
     users.findOne({email:body.email},async (err,docs)=>{
         if(err){
@@ -167,10 +160,8 @@ const registerUser  = ((req,res)=>{
         else{
             //   const userCreated = new users(body);
 
-            
-
-              const salt = await bcrypt.genSalt(10);
-                let password = await bcrypt.hash(body.password, salt);
+            const salt = await bcrypt.genSalt(10);
+            let password = await bcrypt.hash(body.password, salt);
             //   userCreated.save().then((doc) => res.status(201).send(doc));
             let commitment_fee_status 
             if(body.status == "success"){
@@ -210,12 +201,37 @@ const registerUser  = ((req,res)=>{
             }
 
             if(userCreated){
-                res.send({
-                    'message':'User successfully created',
-                    'data':userCreated,
-                    'status':true,
-                    'token':token
-                })
+                // res.send({
+                //     'message':'User successfully created',
+                //     'data':userCreated,
+                //     'status':true,
+                //     'token':token
+                // })
+
+
+                dailytask.find({$and:[{userid:userCreated._id},
+                    {
+                        created_at: {
+                            $gte: today.toDate(),
+                            $lte: moment(today).endOf('day').toDate()
+                        }
+                }]},(err,docs_task)=>{
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        planpackage.findOne({userid:userCreated._id},(err,docs_plan)=>{
+                            res.send({
+                                'message':docs,
+                                'plan':docs_plan,
+                                'task':docs_task,
+                                'status':true,
+                                'token':token
+                            })
+                        })
+                    }
+                    
+                }).sort({'created_at':-1})
             }
             else{
                 res.status(400).send({
