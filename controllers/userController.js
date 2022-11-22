@@ -222,7 +222,7 @@ const registerUser  = ((req,res)=>{
                     else{
                         planpackage.findOne({userid:userCreated._id},(err,docs_plan)=>{
                             res.send({
-                                'message':docs,
+                                'message':userCreated,
                                 'plan':docs_plan,
                                 'task':docs_task,
                                 'status':true,
