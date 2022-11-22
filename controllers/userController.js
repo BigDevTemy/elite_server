@@ -13,7 +13,7 @@ const indexpage = ((req,res)=>{
 })
 
 const checkEmail = ((req,res)=>{
-    let body = req.body.items
+    let body = req.body
     console.log(body)
     users.findOne({email:body.email},(err,docs)=>{
         if(err){
