@@ -139,9 +139,9 @@ const loginUser = ((req,res)=>{
 
 const registerUser  = ((req,res)=>{
 
-    const body = req.body.data;
+    const body = req.body.items;
     
-   
+   console.log(req.body)
    // console.log(req.body);
     // res.send({
     //     'message':'Saved',
