@@ -14,7 +14,7 @@ const indexpage = ((req,res)=>{
 
 const checkEmail = ((req,res)=>{
     let body = req.body.items
-
+    console.log(body)
     users.findOne({email:body.email},(err,docs)=>{
         if(err){
             res.status(400).send({
