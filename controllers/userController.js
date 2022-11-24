@@ -262,12 +262,11 @@ const createTask = (async (req,res)=>{
         status:false
     });
     if(taskCreated){
-        let todayTasks = await dailytask.find({
-            created_at: {
-              $gte: today.toDate(),
-              $lte: moment(today).endOf('day').toDate()
-            }
-          }).sort({'created_at':-1})
+        let todayTasks = await dailytask.find({$and:[{userid:body.userid},{created_at: {
+            $gte: today.toDate(),
+            $lte: moment(today).endOf('day').toDate()
+          }}]}).sort({'created_at':-1})
+          
         res.send({
             'message':'Task Created Successfully',
             'todayTasks':todayTasks,
