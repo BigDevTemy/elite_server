@@ -262,11 +262,12 @@ const createTask = (async (req,res)=>{
         status:false
     });
     if(taskCreated){
-        let todayTasks = await dailytask.find({$and:[{userid:body.userid},{created_at: {
+        let todayTasks = await dailytask.find({$and:[{userid:body.userid},
+            {created_at: {
             $gte: today.toDate(),
             $lte: moment(today).endOf('day').toDate()
           }}]}).sort({'created_at':-1})
-          
+
         res.send({
             'message':'Task Created Successfully',
             'todayTasks':todayTasks,
@@ -446,14 +447,13 @@ const aggregateData = (async (req,res)=>{
 
 const insightData = ((req,res)=>{
     let body = req.body.items
-   let x =  moment(body.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+    const today = moment().startOf('day')
   
     let fetchData = dailytask.find({
         created_at: {
-            $gte: moment(body.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
-            $lte: moment(body.date).endOf('day').toDate()
-            
-          }
+            $gte: today.toDate(),
+            $lte: moment(today).endOf('day').toDate()
+        }
     
     },(err,docs)=>{
         if(err){
