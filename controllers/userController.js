@@ -58,7 +58,7 @@ function generateAccessToken(username) {
   }
 
 const loginUser = ((req,res)=>{
-    let body = req.body
+    let body = req.body.items
     console.log(body)
     const today = moment().startOf('day')
     // let mydate = new Date();
