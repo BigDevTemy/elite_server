@@ -472,7 +472,7 @@ const insightData = ((req,res)=>{
                 "status":true
             })
         }
-    })
+    }).sort({created_at:-1})
 })
 
 
