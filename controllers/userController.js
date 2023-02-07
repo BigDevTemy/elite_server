@@ -270,7 +270,7 @@ const createTask = (async (req,res)=>{
 
         res.send({
             'message':'Task Created Successfully',
-            'todayTasks':todayTasks,
+            'todayTask':todayTasks,
             'status':true
         })
     }
