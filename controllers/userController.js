@@ -447,12 +447,14 @@ const aggregateData = (async (req,res)=>{
 
 const insightData = ((req,res)=>{
     let body = req.body.items
-    const today = moment().startOf('day')
+   
+    let momentum_start = moment(body.split('T')[0]).startOf('day').toDate()
+    let momentum_end = moment(body.split('T')[0]).endOf('day').toDate()
   
     let fetchData = dailytask.find({
         created_at: {
-            $gte: today.toDate(),
-            $lte: moment(today).endOf('day').toDate()
+            $gte: momentum_start,
+            $lte: momentum_end
         }
     
     },(err,docs)=>{
