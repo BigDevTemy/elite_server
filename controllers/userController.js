@@ -447,7 +447,8 @@ const aggregateData = (async (req,res)=>{
 
 const insightData = ((req,res)=>{
     let body = req.body.items
-   
+   console.log(req.body.items);
+   console.log(re.body)
     let momentum_start = moment(body.split('T')[0]).startOf('day').toDate()
     let momentum_end = moment(body.split('T')[0]).endOf('day').toDate()
   
