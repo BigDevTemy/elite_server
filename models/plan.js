@@ -28,7 +28,6 @@ const planSchema = mongoose.Schema({
     },
     amount:{
         type:'String',
-        
     },
    
     created_at:{

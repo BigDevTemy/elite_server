@@ -143,7 +143,7 @@ const registerUser  = ((req,res)=>{
     const today = moment().startOf('day');
     console.log(req.body.items);
     let body = req.body.items;
-    console.log(body.EmailReg.password);
+   
     let email = body.EmailReg.email
     let password = body.EmailReg.password
     let payment_status = body.Paystack.status
@@ -154,6 +154,12 @@ const registerUser  = ((req,res)=>{
     let age = body.Age.age
     let firstname = body.Fullname.firstname
     let lastname = body.Fullname.lastname
+    let amount = body.Planpayment.planpaymentamount
+    let plan_reference = body.Planpayment.plan_reference
+    let plan = body.Planpayment.plan
+    let plan_status = body.Planpayment.plan_status
+    let x = [email,password,payment_status,status,reference,gender,weight,age,firstname,lastname,amount,plan_reference,plan_status,plan]
+    console.log('x',x)
     users.findOne({email:email},async (err,docs)=>{
         if(err){
             res.status(400).send({
@@ -203,10 +209,10 @@ const registerUser  = ((req,res)=>{
                 let mydate = new Date();
                 const createPlan = await planpackage.create({
                     userid:userCreated._id,
-                    amount:req.body.items.Planpayment.planpaymentamount,
-                    plan_type:req.body.items.Planpayment.plan,
-                    payment_reference:req.body.items.Planpayment.plan_reference,
-                    plan_status:req.body.items.Planpayment.plan_status,
+                    amount:amount,
+                    plan_type:plan,
+                    payment_reference:plan_reference,
+                    plan_status:plan_status,
                     dateofpayment:mydate.getDate() + '-' + mydate.getMonth() +'-'+ mydate.getFullYear(),
 
                 })
