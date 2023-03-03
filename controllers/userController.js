@@ -139,12 +139,21 @@ const loginUser = ((req,res)=>{
 
 const registerUser  = ((req,res)=>{
 
-    const body = req.body.items;
-    const today = moment().startOf('day')
-   console.log(req.body)
-   
 
-    users.findOne({email:body.email},async (err,docs)=>{
+    const today = moment().startOf('day');
+    console.log(req.body.items);
+    let body = req.body.items;
+    let email = body.EmailReg.email
+    let password = body.EmailReg.password
+    let payment_status = body.Paystack.status
+    let status = body.Planpayment.plan_status
+    let reference = body.Planpayment.plan_reference
+    let gender = body.Gender.gender
+    let weight = body.Weight.weight
+    let age = body.Age.age
+    let firstname = body.Fullname.firstname
+    let lastname = body.Fullname.lastname
+    users.findOne({email:email},async (err,docs)=>{
         if(err){
             res.status(400).send({
                 'message':err,
@@ -161,10 +170,10 @@ const registerUser  = ((req,res)=>{
             //   const userCreated = new users(body);
 
             const salt = await bcrypt.genSalt(10);
-            let password = await bcrypt.hash(body.password, salt);
+            let newpassword = await bcrypt.hash(password, salt);
             //   userCreated.save().then((doc) => res.status(201).send(doc));
             let commitment_fee_status 
-            if(body.status == "success"){
+            if(payment_status == "success"){
                 commitment_fee_status="paid"
             }else{
                 commitment_fee_status="unpaid"
@@ -173,28 +182,28 @@ const registerUser  = ((req,res)=>{
            try{
                  
             const userCreated = await users.create({
-                password:password,
-                reference:body.reference,
-                status:body.status,
+                password:newpassword,
+                reference:reference,
+                status:status,
                 commitment_fee:commitment_fee_status,
-                email:body.email,
+                email:email,
                 email_verified:false,
-                gender:body.gender,
-                weight:body.weight,
-                age:body.age,
-                firstname:body.firstname,
-                lastname:body.lastname
+                gender:gender,
+                weight:weight,
+                age:age,
+                firstname:firstname,
+                lastname:lastname
             })
-            const token = generateAccessToken({ email: body.email });
+            const token = generateAccessToken({ email: email });
 
-            if(body.plan_status && body.plan_status == "success"){
+            if(status == "success"){
                 let mydate = new Date();
                 const createPlan = await planpackage.create({
                     userid:userCreated._id,
-                    amount:body.planpaymentamount,
-                    plan_type:body.plan,
-                    payment_reference:body.plan_reference,
-                    plan_status:body.plan_status,
+                    amount:body.Planpayment.planpaymentamount,
+                    plan_type:body.Planpayment.planpaymentamount.plan,
+                    payment_reference:body.Planpayment.planpaymentamount.plan_reference,
+                    plan_status:body.Planpayment.planpaymentamount.plan_status,
                     dateofpayment:mydate.getDate() + '-' + mydate.getMonth() +'-'+ mydate.getFullYear(),
 
                 })
