@@ -198,6 +198,8 @@ const registerUser  = ((req,res)=>{
             const token = generateAccessToken({ email: email });
 
             if(status == "success"){
+                let x = [req.body.items.Planpayment.planpaymentamount,req.body.items.Planpayment.plan,req.body.items.Planpayment.plan_reference,req.body.items.Planpayment.plan_status];
+                console.log(x)
                 let mydate = new Date();
                 const createPlan = await planpackage.create({
                     userid:userCreated._id,
