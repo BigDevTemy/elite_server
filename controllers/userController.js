@@ -242,13 +242,14 @@ const registerUser  = ((req,res)=>{
                             console.log(docs_plan)
                             console.log(docs_task)
                             console.log(userCreated)
-                            res.send({
+                            res.status(200).send({
                                 'message':userCreated,
                                 'plan':docs_plan,
                                 'task':docs_task,
                                 'status':true,
                                 'token':token
                             })
+                            
                         })
                     }
                     
