@@ -201,10 +201,10 @@ const registerUser  = ((req,res)=>{
                 let mydate = new Date();
                 const createPlan = await planpackage.create({
                     userid:userCreated._id,
-                    amount:body.Planpayment.planpaymentamount,
-                    plan_type:body.Planpayment.plan,
-                    payment_reference:body.Planpayment.plan_reference,
-                    plan_status:body.Planpayment.plan_status,
+                    amount:req.body.items.Planpayment.planpaymentamount,
+                    plan_type:req.body.items.Planpayment.plan,
+                    payment_reference:req.body.items.Planpayment.plan_reference,
+                    plan_status:req.body.items.Planpayment.plan_status,
                     dateofpayment:mydate.getDate() + '-' + mydate.getMonth() +'-'+ mydate.getFullYear(),
 
                 })
