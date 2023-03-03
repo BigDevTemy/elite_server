@@ -159,7 +159,7 @@ const registerUser  = ((req,res)=>{
     let plan = body.Planpayment.plan
     let plan_status = body.Planpayment.plan_status
     let x = [email,password,payment_status,status,reference,gender,weight,age,firstname,lastname,amount,plan_reference,plan_status,plan]
-    console.log('x',x)
+    // console.log('x',x)
     users.findOne({email:email},async (err,docs)=>{
         if(err){
             res.status(400).send({
@@ -205,7 +205,7 @@ const registerUser  = ((req,res)=>{
 
             if(status == "success"){
                 let x = [req.body.items.Planpayment.planpaymentamount,req.body.items.Planpayment.plan,req.body.items.Planpayment.plan_reference,req.body.items.Planpayment.plan_status];
-                console.log(x)
+              
                 let mydate = new Date();
                 const createPlan = await planpackage.create({
                     userid:userCreated._id,
