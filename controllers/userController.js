@@ -143,6 +143,7 @@ const registerUser  = ((req,res)=>{
     const today = moment().startOf('day');
     console.log(req.body.items);
     let body = req.body.items;
+    console.log(body.EmailReg.password);
     let email = body.EmailReg.email
     let password = body.EmailReg.password
     let payment_status = body.Paystack.status
