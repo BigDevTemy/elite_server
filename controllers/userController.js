@@ -241,6 +241,7 @@ const registerUser  = ((req,res)=>{
                         planpackage.findOne({userid:userCreated._id},(err,docs_plan)=>{
                             console.log(docs_plan)
                             console.log(docs_task)
+                            console.log(userCreated)
                             res.send({
                                 'message':userCreated,
                                 'plan':docs_plan,
