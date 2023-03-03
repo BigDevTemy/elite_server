@@ -188,80 +188,73 @@ const registerUser  = ((req,res)=>{
            
            try{
                  
-            const userCreated = await users.create({
-                password:newpassword,
-                reference:reference,
-                status:status,
-                commitment_fee:commitment_fee_status,
-                email:email,
-                email_verified:false,
-                gender:gender,
-                weight:weight,
-                age:age,
-                firstname:firstname,
-                lastname:lastname
-            })
-            const token = generateAccessToken({ email: email });
-
-            if(status == "success"){
-                let x = [req.body.items.Planpayment.planpaymentamount,req.body.items.Planpayment.plan,req.body.items.Planpayment.plan_reference,req.body.items.Planpayment.plan_status];
-              
-                let mydate = new Date();
-                const createPlan = await planpackage.create({
-                    userid:userCreated._id,
-                    amount:amount,
-                    plan_type:plan,
-                    payment_reference:plan_reference,
-                    plan_status:plan_status,
-                    dateofpayment:mydate.getDate() + '-' + mydate.getMonth() +'-'+ mydate.getFullYear(),
-
+                const userCreated = await users.create({
+                    password:newpassword,
+                    reference:reference,
+                    status:status,
+                    commitment_fee:commitment_fee_status,
+                    email:email,
+                    email_verified:false,
+                    gender:gender,
+                    weight:weight,
+                    age:age,
+                    firstname:firstname,
+                    lastname:lastname
                 })
-            }
+                const token = generateAccessToken({ email: email });
 
-            if(userCreated){
-                // res.send({
-                //     'message':'User successfully created',
-                //     'data':userCreated,
-                //     'status':true,
-                //     'token':token
-                // })
+                if(status == "success"){
+                    let x = [req.body.items.Planpayment.planpaymentamount,req.body.items.Planpayment.plan,req.body.items.Planpayment.plan_reference,req.body.items.Planpayment.plan_status];
+                
+                    let mydate = new Date();
+                    const createPlan = await planpackage.create({
+                        userid:userCreated._id,
+                        amount:amount,
+                        plan_type:plan,
+                        payment_reference:plan_reference,
+                        plan_status:plan_status,
+                        dateofpayment:mydate.getDate() + '-' + mydate.getMonth() +'-'+ mydate.getFullYear(),
 
+                    })
+                }
 
-                dailytask.find({$and:[{userid:userCreated._id},
-                    {
-                        created_at: {
-                            $gte: today.toDate(),
-                            $lte: moment(today).endOf('day').toDate()
+                if(userCreated){
+                    
+                    dailytask.find({$and:[{userid:userCreated._id},
+                        {
+                            created_at: {
+                                $gte: today.toDate(),
+                                $lte: moment(today).endOf('day').toDate()
+                            }
+                    }]},(err,docs_task)=>{
+                        if(err){
+                            console.log(err);
                         }
-                }]},(err,docs_task)=>{
-                    if(err){
-                        console.log(err);
-                    }
-                    else{
-                        planpackage.findOne({userid:userCreated._id},(err,docs_plan)=>{
-                            console.log(docs_plan)
-                            console.log(docs_task)
-                            console.log(userCreated)
-                            res.status(200).send({
-                                'message':userCreated,
-                                'plan':docs_plan,
-                                'task':docs_task,
-                                'status':true,
-                                'token':token
+                        else{
+                            planpackage.findOne({userid:userCreated._id},(err,docs_plan)=>{
+                                console.log(docs_plan)
+                                console.log(docs_task)
+                                console.log(userCreated)
+                                res.status(200).send({
+                                    'message':userCreated,
+                                    'plan':docs_plan,
+                                    'task':docs_task,
+                                    'status':true,
+                                    'token':token
+                                })
+                                
                             })
-                            
-                        })
-                    }
-                    
-                }).sort({'created_at':-1})
-            }
-            else{
-                res.status(400).send({
-                    'message':'Something went wrong',
-                    'status':false
-                    
-                })
-            }
+                        }
+                        
+                    }).sort({'created_at':-1})
+                }
+                else{
+                    res.status(400).send({
+                        'message':'Something went wrong',
+                        'status':false
+                        
+                    })
+                }
            }
            catch(err){
                 console.log(err);
