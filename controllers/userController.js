@@ -59,10 +59,10 @@ function generateAccessToken(username) {
 
 const logmessage=((req,res)=>{
     console.log(req);
-    return {
-        message:"successfully saved",
+    res.send({
+        message:"Successfully Delivered",
         status:"success"
-    }
+    })
 })
 
 const loginUser = ((req,res)=>{
