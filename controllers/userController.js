@@ -57,8 +57,17 @@ function generateAccessToken(username) {
     return false
   }
 
+const logmessage=((req,res)=>{
+    console.log(req);
+    return {
+        message:"successfully saved",
+        status:"success"
+    }
+})
+
 const loginUser = ((req,res)=>{
-    let body = req.body.items
+    // let body = req.body.items
+    let body = req.body
     console.log(body)
     const today = moment().startOf('day')
     // let mydate = new Date();
@@ -491,4 +500,4 @@ const insightData = ((req,res)=>{
 })
 
 
-export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData,insightData,checkEmail}
+export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData,insightData,checkEmail,logmessage}

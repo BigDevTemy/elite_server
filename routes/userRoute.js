@@ -9,7 +9,7 @@ import {
     refreshUserData,
     aggregateData,
     insightData,
-    checkEmail}
+    checkEmail,logmessage}
      from '../controllers/userController.js'
 import {auth} from '../middleware/authMiddleware.js'
 const route = express.Router();
@@ -24,5 +24,6 @@ route.post('/refreshdata',auth,refreshUserData);
 route.get('/aggregate',aggregateData);
 route.post('/insight',insightData);
 route.post('/checkEmail',checkEmail);
+route.post('/logmessage',logmessage)
 
 export default route;
