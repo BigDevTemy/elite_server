@@ -58,7 +58,7 @@ function generateAccessToken(username) {
   }
 
 const logmessage=((req,res)=>{
-    console.log(req);
+    console.log(req.body);
     res.send({
         message:"Successfully Delivered",
         status:"success"
