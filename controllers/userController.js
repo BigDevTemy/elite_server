@@ -78,7 +78,7 @@ const logmessage=((req,res)=>{
 })
 
 const loginUser = ((req,res)=>{
-    let body = req.body.items
+    let body = req.body
     // let body = req.body
     console.log(body)
     const today = moment().startOf('day')
