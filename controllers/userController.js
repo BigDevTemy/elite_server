@@ -39,9 +39,11 @@ const checkEmail = ((req,res)=>{
     })
 })
 
-function generateAccessToken(username) {
-    return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '216000s' });
-  }
+function generateAccessToken(email,firstname) {
+    const accessToken =  jwt.sign({username:email,firstname:firstname}, process.env.TOKEN_SECRET, { expiresIn: '216000s' });
+    const refreshToken = jwt.sign(email, process.env.REFRESH_TOKEN_SECRET,{expiresIn:'1d'});
+    return { accessToken:accessToken,refreshToken:refreshToken}
+}
 
 
   const comparePassword = async (password, hash) => {
@@ -92,9 +94,10 @@ const loginUser = ((req,res)=>{
         }
         else if(docs){
             let checkpassword = await comparePassword(body.password,docs.password);
-            const token = generateAccessToken({ email:body.email });
             
             if(checkpassword){
+                const token = generateAccessToken({ email:body.email,username:docs.firstname });
+            console.log('mytokendetails',token)
                
                 dailytask.find({$and:[{userid:docs._id},
                     {
@@ -113,7 +116,8 @@ const loginUser = ((req,res)=>{
                                 'plan':docs_plan,
                                 'task':docs_task,
                                 'status':true,
-                                'token':token
+                                'token':token.accessToken,
+                                'refresh_token':token.refreshToken
                             })
                         })
                     }
