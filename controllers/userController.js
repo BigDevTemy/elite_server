@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 import jwt from "jsonwebtoken";
 import moment from 'moment';
 import discover from '../models/discover.js';
+import axios from "axios";
 
 
 
@@ -59,15 +60,26 @@ function generateAccessToken(username) {
 
 const logmessage=((req,res)=>{
     console.log(req.body);
-    res.send({
-        message:"Successfully Delivered",
-        status:"success"
+    // res.send({
+    //     message:"Successfully Delivered",
+    //     status:"success"
+    // })
+    axios.post('https://backend.smsprotect.io:5000/classify',{},{
+        headers:{
+            'Content-Type':'application/json'
+        }
+    })
+    .then((response)=>{
+        console.log(response)
+    })
+    .catch((err)=>{
+        console.log(err.response)
     })
 })
 
 const loginUser = ((req,res)=>{
-    // let body = req.body.items
-    let body = req.body
+    let body = req.body.items
+    // let body = req.body
     console.log(body)
     const today = moment().startOf('day')
     // let mydate = new Date();
