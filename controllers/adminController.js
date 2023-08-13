@@ -11,6 +11,8 @@ import discover from '../models/discover.js';
 import category from '../models/category.js';
 import level from '../models/level.js';
 import nodemailer from 'nodemailer';
+import task from '../models/task.js'
+import facilitator from '../models/facilitator.js'
 
 const transporter = nodemailer.createTransport({
     port: 465,               // true for 465, false for other ports
@@ -564,6 +566,70 @@ const createRole = (req,res)=>{
     
 }
 
+const createFacilitator = (req,res)=>{
+    let firstname = req.body?.firstname
+    let lastname = req.body?.lastname
+    let address = req.body?.address
+    let phonenumber = req.body?.phonenumber
+    let email = req.body?.email
+    
+    if(firstname && lastname && address && phonenumber && email){
+        facilitator.findOne({email:email},async(err,docs)=>{
+            if(err){
+                res.status(401).send({'error':err})
+            }
+            else if(docs){
+                res.status(401).send({
+                    'message':'Facilitator Email not unique',
+                    'status':false
+                })
+            }
+            else if(!docs){
+
+                let createFacilitator = await facilitator.create({
+                    firstname:firstname,
+                    lastname:lastname,
+                    email:email,
+                    phonenumber:phonenumber,
+                    address:address
+
+                })
+                res.status(201).send({
+                    "message":"Facilitator Created",
+                    "status":true,
+                    "data":createFacilitator
+                })
+
+                
+               
+            }
+        })
+    }
+    else{
+        res.status(401).send({
+            "message":"NO DATA"
+        })
+    }
+
+    
+}
+
+const allfacilitator =((req,res)=>{
+    facilitator.find({},(err,docs)=>{
+        if(err){
+            res.status(401).send(err)
+        }
+        else if(docs){
+            res.send({
+                "message":"allcoaoch",
+                "data":docs,
+                "status":true
+            })
+        }
+    })
+})
+
+
 
 const createCategory = (async (req,res)=>{
     let body = req.body
@@ -717,5 +783,92 @@ const allDiscovery = async (req,res)=>{
     
 }
 
+const createTask = (req,res)=>{
+    let title = req.body?.title;
+    let duration = req.body?.duration;
+    let coach = req.body?.coach;
+    let coachid = req.body?.coachid;
+    let participantType = req.body?.participantType
 
-export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin,createRole,loginAdmin}
+
+    task.findOne({title:title},async(err,docs)=>{
+        if(err){
+            res.status(401).send(err)
+        }
+        else if(docs){
+            res.status(401).send({
+                "message":'Task Title Not Unique',
+                "status":false
+            })
+        }
+        else if(!docs){
+           
+            try {
+                // Create a new task using the model
+                const newTask = await task.create({
+                    title:title,
+                    duration:duration,
+                    coach:coach,
+                    coachid:coachid
+                });
+            
+                // Update participant array
+            if(participantType === "allusers"){
+                users.find({},async(err,docs)=>{
+                    if(err){
+                        res.status(401).send({
+                            "message":err,
+                            "status":false
+                        })
+                    }
+                    else if(docs){
+                          
+                            docs.forEach(element => {
+                               
+                                newTask.participants.push({
+                                    userid: element._id,
+                                    name: element.firstname,
+                                    emailaddress: element.email,
+                                    status: false,
+                                    });
+
+                            });
+                            const updatedTask = await newTask.save();
+                           
+                            res.status(201).send({
+                                "message":"Task Created",
+                                "data":updatedTask,
+                                "status":true
+                            })
+                    }
+                    else if(!docs){
+                        const updatedTask = await newTask.save();
+                        res.status(201).send({
+                            "message":'Task Successfully Created with no Participant',
+                            "status":true
+                        });
+                    }
+                })
+
+            }
+
+                // newTask.participants.push({
+                //   userid: 'participantUserId',
+                //   name: 'Participant Name',
+                //   emailaddress: 'participant@example.com',
+                //   status: 'Pending',
+                // });
+            
+                // Save the updated task with the new participant
+                
+              } catch (error) {
+                res.status(500).send({ "message":error,"status":false });
+              }
+         
+        }
+    })
+    
+}
+
+
+export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin,createRole,loginAdmin,createTask,createFacilitator,allfacilitator}
