@@ -786,8 +786,8 @@ const allDiscovery = async (req,res)=>{
 const createTask = (req,res)=>{
     let title = req.body?.title;
     let duration = req.body?.duration;
-    let coach = req.body?.coach;
-    let coachid = req.body?.coach;
+    let coach = req.body?.coach.toString();
+    let coachid = req.body?.coach.toString();
     let participantType = req.body?.participantType
 
 

@@ -12,11 +12,11 @@ const taskSchema = mongoose.Schema({
 
     participants:[{userid:"String", name:"String",emailaddress:'String',status:Boolean}],
     coach:{
-        type:Number,
+        type:"String",
         required: [true, "Required"]
     },
     coachid:{
-        type:Number,
+        type:"String",
         required: [true, "Required"]
     },
     created_at:{
