@@ -15,6 +15,10 @@ const adminSchema = mongoose.Schema({
         type:'String',
         required:[true]
     },
+    roleId:{
+        type:'String',
+        required:[true]
+    },
     
     status:{
         type:'String',
