@@ -15,7 +15,7 @@ const adminSchema = mongoose.Schema({
         type:'String',
         required:[true]
     },
-    roleId:{
+    roleid:{
         type:'String',
         required:[true]
     },
