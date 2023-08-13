@@ -31,10 +31,15 @@ Cloudinary.config({
 
 const indexpage = (req,res)=>{
     res.json({
-        'Message':"Welcome User",
+        'Message':"Welcome Adminer",
         "status":true
     })
 }
+
+const createAdmin = (req,res)=>{
+    res.json({'message':'welcome'})
+}
+
 
 const createCategory = (async (req,res)=>{
     let body = req.body
@@ -139,4 +144,4 @@ const allDiscovery = async (req,res)=>{
 }
 
 
-export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery}
+export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin}

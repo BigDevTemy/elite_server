@@ -26,20 +26,30 @@ mongoose.connect(process.env.MONGO_URI,{
 
 
 const port = process.env.PORT || 5000;
-
-
-
 app.use(logger('dev'));
 app.use(bodyParser.json({limit:"50mb"}));
 app.use(bodyParser.urlencoded({limit:"50mb",extended:true, parameterLimit:50000}));
 
-app.use(cors());
+// app.use(cors());
 
-const corsOptions={
-    origin:true,
-    credentials:true
+// const corsOptions={
+//     origin:true,
+//     credentials:true
+// }
+// app.options('*',cors(corsOptions));
+const whitelist = ["http://localhost:3000"]
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
+  credentials: true,
 }
-app.options('*',cors(corsOptions));
+app.use(cors(corsOptions))
+
 app.use('/users',userRouter);
 app.use('/admin',adminRouter);
 

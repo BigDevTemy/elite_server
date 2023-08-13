@@ -515,5 +515,25 @@ const insightData = ((req,res)=>{
     }).sort({created_at:-1})
 })
 
+const refreshToken = (req, res,)=>{
+    
+  let refresh_token = req.body.refreshToken
 
-export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData,insightData,checkEmail,logmessage}
+  try {
+    const verified = jwt.verify(refresh_token, process.env.REFRESH_TOKEN_SECRET);
+    req.user = verified;
+    // res.send(req.user)
+    if(verified){
+        let accessToken = jwt.sign({username:username,email:req.user.email},process.TOKEN_SECRET,{ expiresIn: '216000s'})
+        console.log(accessToken)
+        res.send(accessToken)
+    }
+  } catch (err) {
+    res.status(400).send({ error: "auth failed, check auth-token333" });
+  }
+
+
+}
+
+
+export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData,insightData,checkEmail,logmessage,refreshToken}
