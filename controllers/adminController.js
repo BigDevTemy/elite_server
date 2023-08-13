@@ -30,6 +30,13 @@ Cloudinary.config({
 })
 
 
+function generateAccessToken(email,firstname) {
+    const accessToken =  jwt.sign({username:email,firstname:firstname}, process.env.TOKEN_SECRET, { expiresIn: '216000s' });
+    const refreshToken = jwt.sign(email, process.env.REFRESH_TOKEN_SECRET,{expiresIn:'1d'});
+    return { accessToken:accessToken,refreshToken:refreshToken}
+}
+
+
 // Cloudinary.v2.uploader.upload(uploadStr,{
 //     overwrite:true,
 //     invalidate:true
@@ -631,9 +638,12 @@ const loginAdmin = (req,res)=>{
             else if(docs){
                 let checkpassword = await comparePassword(password,docs.password);
                 if(checkpassword){
+                    const token = generateAccessToken({ email:email,username:docs.firstname });
                     res.send({
                         "message":"log was successful",
-                        "status":true
+                        "status":true,
+                        "admin":docs,
+                        'token':token
                     })
                 }
                 else{
