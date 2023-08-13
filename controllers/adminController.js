@@ -10,6 +10,18 @@ import Cloudinary from 'cloudinary'
 import discover from '../models/discover.js';
 import category from '../models/category.js';
 import level from '../models/level.js';
+import nodemailer from 'nodemailer';
+
+const transporter = nodemailer.createTransport({
+    port: 465,               // true for 465, false for other ports
+    host: "smtppro.zoho.com",
+       auth: {
+            user:'hello@jupitapp.co',
+            pass:'xW1hyG7CDGhm'
+            // pass:'ii84NsMqT9Xv'
+         },
+    secure: true,
+    });
 
 Cloudinary.config({
     cloud_name:'dgabmeacq',
