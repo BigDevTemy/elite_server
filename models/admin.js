@@ -3,10 +3,12 @@ import mongoose from 'mongoose'
 const adminSchema = mongoose.Schema({
     firstname:{
         type:'String',
+        required:[true],
         
     },
     lastname:{
         type:'String',
+        required:[true],
         
     },
     password:{
@@ -16,6 +18,7 @@ const adminSchema = mongoose.Schema({
     
     status:{
         type:'String',
+        required:[true],
     },
     email:{
         type:'String',

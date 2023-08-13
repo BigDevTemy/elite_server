@@ -1,6 +1,8 @@
 import users from '../models/users.js'
 import planpackage from '../models/plan.js'
 import dailytask from '../models/dailytask.js'
+import admin from '../models/admin.js'
+import role from '../models/role.js'
 import bcrypt from 'bcryptjs'
 import jwt from "jsonwebtoken";
 import moment from 'moment';
@@ -37,7 +39,86 @@ const indexpage = (req,res)=>{
 }
 
 const createAdmin = (req,res)=>{
-    res.json({'message':'welcome'})
+    let fname = req.body?.fname
+    let lname = req.body?.lname
+    let password = req.body?.password
+    let email = req.body?.email
+
+    if(fname && lname && password && email){
+        admin.findOne({email:email},async(err,docs)=>{
+            if(err){
+                res.status(401).send({'error':err})
+            }
+            else if(docs){
+                res.status(401).send({
+                    'message':'Email adready in use',
+                    'status':false
+                })
+            }
+            else if(!docs){
+                const salt = await bcrypt.genSalt(10);
+                let newpassword = await bcrypt.hash(password, salt);
+                const adminCreated = await admin.create({
+                    password:newpassword,
+                    status:"active",
+                    
+                    email:email,
+                    email_verified:false,
+                    firstname:fname,
+                    lastname:lname
+                })
+                res.send({
+                    "message":'Admin Created',
+                    "status":true,
+                    "admin":adminCreated
+                })
+            }
+        })
+    }
+    else{
+        res.status(401).send({
+            "message":"NO DATA"
+        })
+    }
+
+    
+}
+
+const createRole = (req,res)=>{
+    let rolename = req.body?.rolename
+    
+    if(rolename){
+        role.findOne({rolename:rolename},async(err,docs)=>{
+            if(err){
+                res.status(401).send({'error':err})
+            }
+            else if(docs){
+                res.status(401).send({
+                    'message':'rolename not unique',
+                    'status':false
+                })
+            }
+            else if(!docs){
+                
+                const roleCreated = await role.create({
+                    rolename:rolename,
+                    
+                })
+                res.send({
+                    "message":'Role Created',
+                    "status":true,
+                    "role":roleCreated
+                })
+            }
+        })
+    }
+    else{
+        res.status(401).send({
+            "message":"NO DATA"
+        })
+    }
+
+    
 }
 
 
@@ -144,4 +225,4 @@ const allDiscovery = async (req,res)=>{
 }
 
 
-export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin}
+export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin,createRole}
