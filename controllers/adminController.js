@@ -647,7 +647,7 @@ const loginAdmin = (req,res)=>{
                     })
                 }
                 else{
-                    res.send({
+                    res.status(401).send({
                         "message":"User not found",
                         "status":false
                     })
