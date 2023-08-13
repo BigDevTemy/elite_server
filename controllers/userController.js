@@ -13,6 +13,22 @@ const indexpage = ((req,res)=>{
     res.send('Welcome User to Heroku Server');
 })
 
+const allUsers = ((req,res)=>{
+    users.find({},(err,docs)=>{
+        if(err){
+            res.status(401).send(err)
+        }
+        else if(docs){
+            res.send({
+                "allusers":docs,
+                "status":true
+            })
+        }
+    })
+})
+
+
+
 const checkEmail = ((req,res)=>{
     
     let body =  req.body
@@ -536,4 +552,4 @@ const refreshToken = (req, res,)=>{
 }
 
 
-export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData,insightData,checkEmail,logmessage,refreshToken}
+export {indexpage,registerUser,loginUser,createTask,deleteTask,updateTask,refreshUserData,aggregateData,insightData,checkEmail,logmessage,refreshToken,allUsers}
