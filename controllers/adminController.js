@@ -605,6 +605,53 @@ const createLevel = (async (req,res)=>{
     }
 })
 
+const comparePassword = async (password, hash) => {
+    try {
+      // Compare password
+      console.log('password',password);
+      console.log('hash',hash)
+      return await bcrypt.compare(password, hash)
+    } catch (error) {
+      console.log('error',error)
+    }
+  
+    // Return false if error
+    return false
+  }
+
+const loginAdmin = (req,res)=>{
+    let email = req.body?.email
+    let password = req.body?.password
+
+    if(email && password){
+        admin.findOne({email:email},async(err,docs)=>{
+            if(err){
+                res.status(401).send(err)
+            }
+            else if(docs){
+                let checkpassword = await comparePassword(password,docs.password);
+                if(checkpassword){
+                    res.send({
+                        "message":"log was successful",
+                        "status":true
+                    })
+                }
+                else{
+                    res.send({
+                        "message":"User not found",
+                        "status":false
+                    })
+                }
+            }
+            else if(!docs){
+                res.status(401).send({
+                    "message":"User not found",
+                    "status":false
+                })
+            }
+        })
+    }
+}
 
 const createDiscovery = (async (req,res)=>{
     let creatediscovery = await discover.create({
@@ -661,4 +708,4 @@ const allDiscovery = async (req,res)=>{
 }
 
 
-export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin,createRole}
+export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin,createRole,loginAdmin}

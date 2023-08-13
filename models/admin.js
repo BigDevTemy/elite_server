@@ -15,6 +15,9 @@ const adminSchema = mongoose.Schema({
         type:'String',
         required:[true]
     },
+    changepassword:{
+        type:Boolean
+    },
     roleid:{
         type:'String',
         required:[true]
