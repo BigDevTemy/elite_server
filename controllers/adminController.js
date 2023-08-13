@@ -870,5 +870,20 @@ const createTask = (req,res)=>{
     
 }
 
+const allTask = ((req,res)=>{
+    
+    task.find({},(err,docs)=>{
+        if(err){
+            res.status(401).send(err)
+        }
+        else if(docs){
+            res.send({
+                "message":docs,
+                "status":true
+            })
+        }
+    })
+})
 
-export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin,createRole,loginAdmin,createTask,createFacilitator,allfacilitator}
+
+export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin,createRole,loginAdmin,createTask,createFacilitator,allfacilitator,allTask}
