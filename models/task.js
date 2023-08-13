@@ -16,7 +16,7 @@ const taskSchema = mongoose.Schema({
         required: [true, "Required"]
     },
     coachid:{
-        type:'String',
+        type:Number,
         required: [true, "Required"]
     },
     created_at:{
