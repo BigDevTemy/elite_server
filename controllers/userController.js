@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import moment from 'moment';
 import discover from '../models/discover.js';
 import axios from "axios";
+import task from '../models/task.js';
 
 
 
@@ -504,19 +505,19 @@ const aggregateData = (async (req,res)=>{
 
 const insightData = ((req,res)=>{
     let body = req.body.selectedDate
-   console.log(req.body);
-   console.log(body);
+    let category = req.body.category
+  
   
     let momentum_start = moment(body.split('T')[0]).startOf('day').toDate()
     let momentum_end = moment(body.split('T')[0]).endOf('day').toDate()
-  
-    let fetchData = dailytask.find({
-        created_at: {
-            $gte: momentum_start,
-            $lte: momentum_end
-        }
     
-    },(err,docs)=>{
+    let fetchData = task.find({$and:[{category:category},
+        {
+            created_at: {
+                $gte: momentum_start,
+                $lte: momentum_end
+            }
+    }]},(err,docs)=>{
         if(err){
             res.status(400).send({
                 "message":err,
