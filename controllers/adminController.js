@@ -789,7 +789,7 @@ const createTask = (req,res)=>{
     let coach = req.body?.coach.toString();
     let coachid = req.body?.coach.toString();
     let participantType = req.body?.participantType
-    let category = req.body?.category
+    // let category = req.body?.category
 
 
     task.findOne({title:title},async(err,docs)=>{
@@ -811,7 +811,7 @@ const createTask = (req,res)=>{
                     duration:duration,
                     coach:coach,
                     coachid:coachid,
-                    category:category
+                    category:participantType
                 });
             
                 // Update participant array
