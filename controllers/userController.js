@@ -242,7 +242,7 @@ const registerUser  = ((req,res)=>{
                     firstname:firstname,
                     lastname:lastname
                 })
-                const token = generateAccessToken({ email: email });
+                const token = generateAccessToken({ email: email,firstname:firstname });
 
                 if(status == "success"){
                     let x = [req.body.items.Planpayment.planpaymentamount,req.body.items.Planpayment.plan,req.body.items.Planpayment.plan_reference,req.body.items.Planpayment.plan_status];
@@ -281,7 +281,8 @@ const registerUser  = ((req,res)=>{
                                     'plan':docs_plan,
                                     'task':docs_task,
                                     'status':true,
-                                    'token':token
+                                    'token':token.accessToken,
+                                    'refresh_token':token.refreshToken
                                 })
                                 
                             })

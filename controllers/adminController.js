@@ -885,5 +885,41 @@ const allTask = ((req,res)=>{
     })
 })
 
+const taskToday = ((req,res)=>{
+    const today = moment().startOf('day');
+    console.log(today)
+    task.find({created_at: {
+                $gte: today.toDate(),
+                $lte: moment(today).endOf('day').toDate()
+            }
+    },(err,docs_task)=>{
+        if(err){
+            res.status(401).send(err)
+        }
+        else{
+            res.status(201).send(docs_task)
+        }
+    })
+})
 
-export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin,createRole,loginAdmin,createTask,createFacilitator,allfacilitator,allTask}
+const taskTodayuser = ((req,res)=>{
+    const today = moment().startOf('day');
+    userid = req.body?.userid
+    
+    task.find({created_at: {
+                $gte: today.toDate(),
+                $lte: moment(today).endOf('day').toDate()
+            }
+    },(err,docs_task)=>{
+        if(err){
+            res.status(401).send(err)
+        }
+        else{
+            res.status(201).send(docs_task)
+        }
+    })
+})
+
+
+
+export {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin,createRole,loginAdmin,createTask,createFacilitator,allfacilitator,allTask,taskToday,taskTodayuser}

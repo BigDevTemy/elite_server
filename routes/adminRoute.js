@@ -1,5 +1,5 @@
 import express from 'express';
-import {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin,createRole, loginAdmin,createTask, createFacilitator,allfacilitator,allTask} from '../controllers/adminController.js'
+import {indexpage,createCategory,createLevel,createDiscovery,allDiscovery,createAdmin,createRole, loginAdmin,createTask, createFacilitator,allfacilitator,allTask,taskToday} from '../controllers/adminController.js'
 import {auth} from '../middleware/authMiddleware.js'
 //import { createTask } from '../controllers/userController.js';
 const route = express.Router();
@@ -16,5 +16,6 @@ route.post('/create/task',createTask);
 route.post('/create/facilitator',createFacilitator)
 route.get('/allfacilitator',allfacilitator)
 route.get('/alltask',allTask)
+route.get('/todaytask',taskToday)
 
 export default route;
