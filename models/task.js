@@ -19,6 +19,10 @@ const taskSchema = mongoose.Schema({
         type:"String",
         required: [true, "Required"]
     },
+    category:{
+        type:"String",
+        required: [true, "Required"]
+    },
     created_at:{
                 type:Date,
                 default: new Date()
