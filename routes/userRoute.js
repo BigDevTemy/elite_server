@@ -22,7 +22,7 @@ route.post('/deleteTask',auth,deleteTask);
 route.post('/updateTask',auth,updateTask);
 route.post('/refreshdata',auth,refreshUserData);
 route.get('/aggregate',aggregateData);
-route.post('/insight',auth,insightData);
+route.post('/insight',insightData);
 route.post('/checkEmail',checkEmail);
 route.post('/logmessage',logmessage)
 route.post('/refreshToken',refreshToken)
